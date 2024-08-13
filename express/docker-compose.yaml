@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+
+  waha:
+    container_name: waha_new
+    image: devlikeapro/waha:latest
+    ports:
+      - "3001:3000"

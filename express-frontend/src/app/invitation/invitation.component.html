@@ -1,0 +1,30 @@
+<div class="p-6 text-center bg-gray-100 min-h-screen">
+    <h1 class="text-4xl font-extrabold text-blue-600 mb-6">
+        Wedding Invitations
+    </h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div 
+            *ngFor="let invitation of weddingInvitations" 
+            class="bg-white shadow-md rounded-lg p-6 transition-transform transform hover:scale-105"
+        >
+            <h2 class="text-2xl font-semibold text-gray-800">
+                {{ invitation.nama_laki_laki }} & {{ invitation.nama_perempuan }}
+            </h2>
+            <div class="text-left mt-4">
+                <h3 class="text-lg font-semibold text-blue-500">Akad :</h3>
+                <p class="text-gray-700">
+                    {{ invitation.hari_akad }}, {{ invitation.tanggal_akad | date:'longDate':'':'id' }}<br>
+                    {{ transformTimeToDate(invitation.waktu_mulai_akad) | date:'shortTime' }} - {{ transformTimeToDate(invitation.waktu_selesai_akad) | date:'shortTime' }}<br>
+                    {{ invitation.lokasi_akad }}
+                </p>
+                <h3 class="text-lg font-semibold text-blue-500 mt-4">Resepsi :</h3>
+                <p class="text-gray-700">
+                    {{ invitation.hari_resepsi }}, {{ invitation.tanggal_resepsi | date:'longDate':'':'id' }}<br>
+                    {{ transformTimeToDate(invitation.waktu_mulai_resepsi) | date:'shortTime' }} - {{ transformTimeToDate(invitation.waktu_selesai_resepsi) | date:'shortTime' }}<br>
+                    {{ invitation.lokasi_resepsi }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

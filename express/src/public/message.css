@@ -1,0 +1,88 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+h1 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+.step {
+    display: none;
+}
+.step.active {
+    display: block;
+}
+label {
+    margin-bottom: 5px;
+    color: #555;
+}
+select, input, textarea, button {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #218838;
+}
+.response {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+}
+.success {
+    color: green;
+}
+.error {
+    color: red;
+}
+.bold {
+    font-weight: bold;
+}
+.center {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.center button {
+    margin: 0 8px 10px 8px;
+    border-radius: 8px;
+    font-size: 18px;
+    width: 15%;
+    padding: 10px 0 10px 0;
+    background-color: transparent;
+    color: black;
+    border: #ddd solid 1px;       
+}
+
+.center button:hover {
+    background-color: #f0e9e9;
+    color: rgb(37, 35, 35);
+}

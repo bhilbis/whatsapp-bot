@@ -1,0 +1,17 @@
+<div class="fixed top-0 left-0 h-full w-72 bg-blue-800 text-white p-4 transition-transform duration-300 z-30" [class.-translate-x-full]="isHidden">
+  <div class="text-center mb-6 cursor-pointer" (click)="navigateTo('')">
+    <h1 class="text-3xl font-bold">3PM</h1>
+    <p class="text-[10px] -mt-1 text-gray-400">SOLUTIONS</p>
+  </div>
+  <div>
+    <h3 class="text-[12px] text-[#D882D6] mb-2">Invitation Data</h3>
+    <ul class="mb-4 space-y-2">
+      <li class="flex items-center hover:text-gray-300 cursor-pointer" (click)="navigateTo('invitation')">
+        <img src="assets/svg/user-alt.svg" class="h-5 w-5 mr-2" alt=""> Invitation
+      </li>
+      <li class="flex items-center hover:text-gray-300 cursor-pointer" (click)="navigateTo('rsvp')">
+        <img src="assets/svg/check-circle.svg" class="h-5 w-5 mr-2" alt=""> RSVP
+      </li>
+    </ul>
+  </div>
+</div>

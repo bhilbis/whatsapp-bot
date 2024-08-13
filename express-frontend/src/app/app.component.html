@@ -1,0 +1,32 @@
+<div class="fixed top-0 left-0 w-full bg-white shadow-md h-16 z-20 flex items-center justify-between px-4">
+    <!-- Profile Button on the Right -->
+    <div class="ml-auto flex items-center space-x-4">
+      <button class="bg-indigo-100 hover:bg-blue-500 text-[#D882D6] py-2 px-4 rounded">Profile</button>
+    </div>
+  </div>
+  
+  <div class="flex ">
+    <div class="relative flex transition-all duration-300" [class.ml-72]="!sidebarHidden" [class.ml-0]="sidebarHidden">
+     
+      <button
+      type="button"
+      class="sticky top-3 z-40 bg-white hover:bg-slate-200 text-black p-2 rounded-full focus:outline-none"
+      style="width: 40px; height: 40px; left: -20px;"
+      (click)="toggleSidebar()">
+      <span class="sr-only">Toggle Sidebar</span>
+      <svg class="w-6 h-6 transform scale-x-[-1]" fill="none" stroke="black" viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5">
+          </path>
+      </svg>
+  </button>
+      <app-navigation></app-navigation>
+    </div>
+    
+    <!-- Main Content -->
+    <div [class.ml-0]="!sidebarHidden" [class.ml-0]="sidebarHidden" class="flex-1 p-8 mt-16">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  

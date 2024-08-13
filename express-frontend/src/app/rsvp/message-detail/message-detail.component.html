@@ -1,0 +1,13 @@
+<div class="p-6 bg-gray-100 min-h-screen">
+  <h1 class="text-3xl font-bold mb-6">Messages from {{ senderNumber }}</h1>
+
+  <div *ngIf="messages.length > 0; else noMessages">
+    <div *ngFor="let message of messages" class="bg-white p-4 rounded-lg shadow-md mb-4">
+      <p class="text-lg"><strong>Message:</strong> {{ message.message }}</p>
+      <p class="text-sm text-gray-500"><strong>Status:</strong> {{ message.status }}</p>
+    </div>
+  </div>
+  <ng-template #noMessages>
+    <p class="text-gray-500">No messages found for this sender.</p>
+  </ng-template>
+</div>

@@ -1,0 +1,24 @@
+<div class="p-6 bg-gray-100 min-h-screen">
+  <h1 class="text-3xl font-bold mb-6">RSVP Page</h1>
+  <p class="mb-10 text-lg">Here is the RSVP information.</p>
+
+  <!-- Display RSVP messages in a list -->
+  <div *ngIf="filteredMessages.length > 0; else noMessages" class="space-y-4">
+    <div *ngFor="let message of filteredMessages" class="bg-white p-4 rounded-lg shadow-md hover:bg-gray-50 cursor-pointer" (click)="navigateToDetail(message.id)">
+      <div class="text-lg font-semibold">{{ message.message }}</div>
+      <div class="text-sm text-gray-500">Status: {{ message.status }}</div>
+      <div class="text-sm text-gray-700">Sender: {{ message.sender_number }}</div>
+    </div>
+  </div>
+  <ng-template #noMessages>
+    <p class="text-gray-500">No messages available.</p>
+  </ng-template>
+
+  <!-- Display all messages from the selected sender -->
+  <div *ngIf="selectedSenderMessages.length > 0" class="mt-6">
+    <h2 class="text-2xl font-bold mb-4">Messages from {{ selectedSenderNumber }}</h2>
+    <div *ngFor="let msg of selectedSenderMessages" class="bg-white p-4 rounded-lg shadow-md mb-4">
+      {{ msg.message }}
+    </div>
+  </div>
+</div>

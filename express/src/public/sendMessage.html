@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Message</title>
+    <link rel="stylesheet" href="./message.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Send Message</h1>
+        <a href="./index.html"><button type="button">Back</button></a>
+        <form id="sendMessageForm">
+            <div class="step active" id="step1">
+                <label for="countryCode">Country Code:</label>
+                <select id="countryCode" name="countryCode">
+                    <option value="62">Indonesia (+62)</option>
+                    <option value="1">USA (+1)</option>
+                    <option value="91">India (+91)</option>
+                </select>
+                <label for="chatId"><small>(Recipient)</small> Phone Number: <small>(<i>without your international phone number</i>)</small></label>
+                <input type="text" id="chatId" name="chatId" placeholder="859*********" required>
+                <label for="namaLakiLaki">Nama Laki-Laki:</label>
+                <input type="text" id="namaLakiLaki" name="namaLakiLaki" required>
+                <label for="namaPerempuan">Nama Perempuan:</label>
+                <input type="text" id="namaPerempuan" name="namaPerempuan" required>
+                <button type="button" onclick="nextStep()">Next</button>
+            </div>
+            <div class="step" id="step2">
+                <h2>Akad</h2>
+                <label for="hariAkad">Hari:</label>
+                <input type="hidden" id="hariAkad" name="hariAkad" required>
+                <label for="tanggalAkad">Tanggal:</label>
+                <input type="date" id="tanggalAkad" name="tanggalAkad" required>
+                <label for="waktuMulaiAkad">Waktu Mulai:</label>
+                <input type="time" id="waktuMulaiAkad" name="waktuMulaiAkad" required>
+                <label for="waktuSelesaiAkad">Waktu Selesai:</label>
+                <input type="time" id="waktuSelesaiAkad" name="waktuSelesaiAkad" required>
+                <label for="lokasiAkad">Lokasi:</label>
+                <input type="text" id="lokasiAkad" name="lokasiAkad" required>
+                <button type="button" onclick="nextStep()">Next</button>
+            </div>
+            <div class="step" id="step3">
+                <h2>Resepsi</h2>
+                <label for="hariResepsi">Hari:</label>
+                <input type="hidden" id="hariResepsi" name="hariResepsi" required>
+                <label for="tanggalResepsi">Tanggal:</label>
+                <input type="date" id="tanggalResepsi" name="tanggalResepsi" required>
+                <label for="waktuMulaiResepsi">Waktu Mulai:</label>
+                <input type="time" id="waktuMulaiResepsi" name="waktuMulaiResepsi" required>
+                <label for="waktuSelesaiResepsi">Waktu Selesai:</label>
+                <input type="time" id="waktuSelesaiResepsi" name="waktuSelesaiResepsi" required>
+                <label for="lokasiResepsi">Lokasi:</label>
+                <input type="text" id="lokasiResepsi" name="lokasiResepsi" required>
+                <button type="submit">Send Message</button>
+            </div>
+        </form>
+        <div class="center">
+            <button type="button" onclick="showStep(1)">1</button>
+            <button type="button" onclick="showStep(2)">2</button>
+            <button type="button" onclick="showStep(3)">3</button>
+        </div>
+        <p id="response"></p>
+    </div>
+
+    <script>
+        let currentStep = 1;
+
+    function showStep(step) {
+        document.getElementById(`step${currentStep}`).classList.remove('active');
+        currentStep = step;
+        document.getElementById(`step${currentStep}`).classList.add('active');
+    }
+        
+        function nextStep() {
+            const activeStep = document.querySelector('.step.active');
+            showStep(currentStep + 1)
+            activeStep.classList.remove('active');
+            if (activeStep.nextElementSibling) {
+                activeStep.nextElementSibling.classList.add('active');
+            }
+        }
+    
+        const dayNames = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"];
+
+        function updateDay(inputId, dayInputId) {
+            const dateInput = document.getElementById(inputId);
+            const dayInput = document.getElementById(dayInputId);
+            dateInput.addEventListener('change', function() {
+                const selectedDate = new Date(this.value);
+                const dayName = dayNames[selectedDate.getUTCDay()];
+                dayInput.value = dayName;
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDay('tanggalAkad', 'hariAkad');
+            updateDay('tanggalResepsi', 'hariResepsi');
+        });
+
+        document.getElementById('sendMessageForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const invitationData = {
+                chat_id: document.getElementById('countryCode').value + document.getElementById('chatId').value + '@c.us',
+                nama_laki_laki: document.getElementById('namaLakiLaki').value,
+                nama_perempuan: document.getElementById('namaPerempuan').value,
+                hari_akad: document.getElementById('hariAkad').value,
+                tanggal_akad: document.getElementById('tanggalAkad').value,
+                waktu_mulai_akad: document.getElementById('waktuMulaiAkad').value,
+                waktu_selesai_akad: document.getElementById('waktuSelesaiAkad').value,
+                lokasi_akad: document.getElementById('lokasiAkad').value,
+                hari_resepsi: document.getElementById('hariResepsi').value,
+                tanggal_resepsi: document.getElementById('tanggalResepsi').value,
+                waktu_mulai_resepsi: document.getElementById('waktuMulaiResepsi').value,
+                waktu_selesai_resepsi: document.getElementById('waktuSelesaiResepsi').value,
+                lokasi_resepsi: document.getElementById('lokasiResepsi').value
+            };
+
+            try {
+                const response = await fetch('/api/addInvitation', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(invitationData)
+                });
+
+                if (response.ok) {
+                    document.getElementById('response').textContent = "Invitation Successfully Saved";
+                } else {
+                    document.getElementById('response').textContent = "Failed to Save Invitation";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById('response').textContent = "Terjadi kesalahan saat menyimpan undangan";
+            }
+
+            const countryCode = document.getElementById('countryCode').value;
+            const chatIdInput = document.getElementById('chatId');
+            const chatId = countryCode + chatIdInput.value + '@c.us';
+             const phoneNumbers = chatId.split(/[\s,]+/);
+            const namaLakiLaki = document.getElementById('namaLakiLaki').value;
+            const namaPerempuan = document.getElementById('namaPerempuan').value;
+            const hariAkad = document.getElementById('hariAkad').value;
+            const tanggalAkad = document.getElementById('tanggalAkad').value;
+            const waktuMulaiAkad = document.getElementById('waktuMulaiAkad').value;
+            const waktuSelesaiAkad = document.getElementById('waktuSelesaiAkad').value;
+            const lokasiAkad = document.getElementById('lokasiAkad').value;
+            const hariResepsi = document.getElementById('hariResepsi').value;
+            const tanggalResepsi = document.getElementById('tanggalResepsi').value;
+            const waktuMulaiResepsi = document.getElementById('waktuMulaiResepsi').value;
+            const waktuSelesaiResepsi = document.getElementById('waktuSelesaiResepsi').value;
+            const lokasiResepsi = document.getElementById('lokasiResepsi').value;
+            const session = 'default';
+
+            const text = `
+Bersama dengan undangan ini, saya turut mengundang Bapak/Ibu/Saudara untuk hadir di acara pernikahan kami.
+*${namaLakiLaki} & ${namaPerempuan}*
+
+Akad akan digelar pada:
+*Hari dan Tanggal:* *${hariAkad}*, *${tanggalAkad}*
+*Pukul: ${waktuMulaiAkad} WIB s/d ${waktuSelesaiAkad} WIB*
+*Lokasi: ${lokasiAkad}*
+
+Resepsi akan digelar pada:
+*Hari dan Tanggal:* *${hariResepsi}*, *${tanggalResepsi}*
+*Pukul: ${waktuMulaiResepsi} WIB s/d ${waktuSelesaiResepsi} WIB*
+*Lokasi: ${lokasiResepsi}*
+
+Demikian undangan dari kami yang sedang berbahagia.
+Kami berharap Bapak/Ibu/Saudara berkenan untuk hadir di acara kami ini. \n\n
+
+Anda bisa konfirmasi kehadiran melalui Undangan atau klik tombol RSVP dibawah ini.
+`;
+
+            const responseElement = document.getElementById('response');
+            responseElement.textContent = '';
+
+            try {
+                const response = await fetch('http://localhost:3001/api/sendText', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({ chatId, text, session })
+                });
+
+                console.log('Response status:', response.status);
+                const responseData = await response.text();
+                console.log('Response data:', responseData);
+
+                if (response.ok) {
+                    responseElement.textContent = "Text Successfully Sent";
+                    responseElement.className = 'success';
+                } else {
+                    const errorData = await response.text();
+                    if (errorData.includes('Nomor International Sudah terdeteksi')) {
+                        responseElement.textContent = "Nomor international sudah ada";
+                    } else {
+                        responseElement.textContent = "Pesan Tidak Berhasil Terkirim";
+                    }
+                    responseElement.className = 'error';
+                }
+            } catch (error) {
+                responseElement.textContent = "Pesan Tidak Berhasil Terkirim";
+                responseElement.className = 'error';
+            }
+        });
+    </script>
+</body>
+</html>
